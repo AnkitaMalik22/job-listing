@@ -14,7 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
 
-
+app.get('/health-api', (req, res) => {
+    res.send('Server is up and running');
+})
 
 // Connect to MongoDB
 connectDB();
