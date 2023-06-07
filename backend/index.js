@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const connectDB = require("./database");
+// const errorHandler =  require("./errorHandler");
 const User = require("./models/UserModel");
 const Job = require("./models/JobModel");
 
@@ -23,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/api/health-api", (req, res) => {
   res.send("Server is up and running");
 });
-app.post("/api/register", async (req, res) => {
+app.post("/api/register", async (req, res,next) => {
   try {
     const { name, email, mobile, password } = req.body;
 
@@ -54,12 +55,11 @@ app.post("/api/register", async (req, res) => {
       token,
     });
   } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server error");
+    next(new Error("Something went wrong! Please try after some time."));
   }
 });
 
-app.post("/api/login", async (req, res) => {
+app.post("/api/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -81,15 +81,13 @@ app.post("/api/login", async (req, res) => {
           token,
         });
       }
-    }
-else {
+    } else {
       return res
         .status(400)
         .send({ status: "FAIL", message: "User Not Registered" });
     }
   } catch (err) {
-    // console.log(err.message);
-    res.status(500).send({ status: "FAIL", message: "Server error" });
+    next(new Error("Something went wrong! Please try after some time."));
   }
 });
 
