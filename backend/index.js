@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const connectDB = require("./database");
-// const errorHandler =  require("./errorHandler");
+const errorHandler =  require("./middleware/errorHandler");
+const {isAuthenticated} = require("./middleware/auth");
 const User = require("./models/UserModel");
 const Job = require("./models/JobModel");
 
@@ -19,19 +20,26 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+
+
+
 // routes
 
 app.get("/api/health-api", (req, res) => {
   res.send("Server is up and running");
 });
-app.post("/api/register", async (req, res,next) => {
+app.post("/api/register", async (req, res, next) => {
   try {
     const { name, email, mobile, password } = req.body;
+    if(!name || !email || !mobile || !password){
+      return res.status(400).json({ message: "Missing required fields" });
+    }
 
     const isExistedUser = await User.findOne({ email });
 
     if (isExistedUser) {
-      return res.status(400).json({ error: "User already registered!" });
+      next(new Error("User already exists"));
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10);
@@ -62,6 +70,9 @@ app.post("/api/register", async (req, res,next) => {
 app.post("/api/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    if(!email || !password){
+      return res.status(400).json({ message: "Missing required fields" });
+    }
     const user = await User.findOne({ email });
 
     if (user) {
@@ -75,6 +86,7 @@ app.post("/api/login", async (req, res, next) => {
           expiresIn: "10d",
         });
 
+        
         res.send({
           status: "SUCCESS",
           message: "User logged in successfully",
@@ -82,14 +94,50 @@ app.post("/api/login", async (req, res, next) => {
         });
       }
     } else {
-      return res
-        .status(400)
-        .send({ status: "FAIL", message: "User Not Registered" });
+      next(new Error("User not found"));
     }
   } catch (err) {
     next(new Error("Something went wrong! Please try after some time."));
   }
 });
+
+// protected route --- create job post
+
+app.post("/api/create-job",isAuthenticated, async (req, res, next) => {
+  try {
+    const { companyName,logoURL,position,salary,jobType,remote,location,description,aboutCompany,skills, date } = req.body;
+
+    if (!companyName || !logoURL || !position || !salary || !jobType || !remote || !location || !description || !aboutCompany || !skills ) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+    console.log(req.body);
+    await Job.create({
+      companyName,
+      logoURL,
+      position,
+      salary,
+      jobType,
+      remote,
+      location,
+      description,
+      aboutCompany,
+      skills,
+      date,
+    });
+
+    res.send({
+      status: "SUCCESS",
+      message: "Job posted successfully",
+    });
+  } catch (err) {
+    next(new Error("Something went wrong! Please try after some time."));
+  }
+});
+
+
+  
+
+
 
 // Connect to MongoDB
 connectDB();

@@ -21,8 +21,8 @@ const JobSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    Remote: {
-        type: String,
+    remote: {
+        type: Boolean,
         required: true,
     },
     location: {
@@ -37,9 +37,13 @@ const JobSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    Skills: {
+    skills: {
         type: String,
         required: true,
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
     },
     date: {
         type: Date,
