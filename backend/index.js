@@ -61,6 +61,7 @@ app.post("/api/register", async (req, res, next) => {
     res.send({
       status: "SUCCESS",
       message: "User registerd successfully",
+      recruiterName : user.name,
       token,
     });
   } catch (err) {
@@ -92,6 +93,7 @@ app.post("/api/login", async (req, res, next) => {
         res.send({
           status: "SUCCESS",
           message: "User logged in successfully",
+          recruiterName : user.name,
           token,
         });
       }
@@ -151,6 +153,7 @@ app.get("/api/jobs/:skills", async (req, res, next) => {
   } catch (err) {
     next(new Error("Something went wrong! Please try after some time."));
   }
+
 });
 
 // ------------------ detail description of a job ----------------------------
@@ -160,6 +163,8 @@ app.get("/api/job/:id",async(req,res,next)=>{
   try{
     const job = await Job.findById(id);
     res.send({
+      status: "SUCCESS",
+      message: "Job fetched successfully",
       job : job
     })
   }
@@ -167,6 +172,28 @@ app.get("/api/job/:id",async(req,res,next)=>{
     next(new Error("Something went wrong! Please try after some time."));
   }
 })
+
+
+// --------------------------------------- edit job post -----------------------
+
+app.put("/api/job/:id",async(req,res,next)=>{
+  const id = req.params.id;
+  const { companyName,logoURL,position,salary,jobType,remote,location,description,aboutCompany,skills, date } = req.body;
+  try{
+ await Job.findByIdAndUpdate(id, { companyName,logoURL,position,salary,jobType,remote,location,description,aboutCompany,skills, date });
+
+    res.send({
+      status : "SUCCESS",
+      message : "Job Updated Successfully!"
+    })
+  }
+  catch(err){
+    console.log(err)
+    next(new Error("Something went wrong! Please try after some time."));
+  }
+    
+
+  })
 
 // ============================================================ Routes End ================================================================
 
