@@ -15,7 +15,6 @@ const Job = require("./models/JobModel");
 dotenv.config();
 
 // middleware
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,11 +23,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-// routes
+// ============================================================ Routes  Start ================================================================
 
 app.get("/api/health-api", (req, res) => {
   res.send("Server is up and running");
 });
+
+// ------------------------------- register ------------------------------- 
 app.post("/api/register", async (req, res, next) => {
   try {
     const { name, email, mobile, password } = req.body;
@@ -67,6 +68,7 @@ app.post("/api/register", async (req, res, next) => {
   }
 });
 
+// -------------------------------- login ----------------------------------
 app.post("/api/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -101,7 +103,7 @@ app.post("/api/login", async (req, res, next) => {
   }
 });
 
-// protected route --- create job post
+// -------------protected route --- create job post -------------------------
 
 app.post("/api/create-job",isAuthenticated, async (req, res, next) => {
   try {
@@ -134,8 +136,40 @@ app.post("/api/create-job",isAuthenticated, async (req, res, next) => {
   }
 });
 
+// -----------------------  get filtered jobs ------------------------------
 
-  
+
+app.get("/api/jobs/:skills", async (req, res, next) => {
+  try {
+    const skills = req.params.skills;
+    const jobs = await Job.find({skills:{$in:[skills]}});
+    res.send({
+      status: "SUCCESS",
+      message: "Jobs fetched successfully",
+      data: jobs,
+    });
+  } catch (err) {
+    next(new Error("Something went wrong! Please try after some time."));
+  }
+});
+
+// ------------------ detail description of a job ----------------------------
+
+app.get("/api/job/:id",async(req,res,next)=>{
+  const id = req.params.id;
+  try{
+    const job = await Job.findById(id);
+    res.send({
+      job : job
+    })
+  }
+  catch(err){
+    next(new Error("Something went wrong! Please try after some time."));
+  }
+})
+
+// ============================================================ Routes End ================================================================
+
 
 
 
