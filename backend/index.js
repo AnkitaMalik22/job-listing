@@ -16,8 +16,9 @@ dotenv.config();
 
 // middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('./public'))
 
 
 
@@ -33,6 +34,9 @@ app.get("/api/health-api", (req, res) => {
 app.post("/api/register", async (req, res, next) => {
   try {
     const { name, email, mobile, password } = req.body;
+
+    console.log(req.body);
+
     if(!name || !email || !mobile || !password){
       return res.status(400).json({ message: "Missing required fields" });
     }
@@ -114,6 +118,7 @@ app.post("/api/create-job",isAuthenticated, async (req, res, next) => {
     if (!companyName || !logoURL || !position || !salary || !jobType || !remote || !location || !description || !aboutCompany || !skills ) {
       return res.status(400).json({ message: "Missing required fields" });
     }
+    const lowercaseSkills = skills.map((skill) => skill.toLowerCase());  
     console.log(req.body);
     await Job.create({
       companyName,
@@ -125,7 +130,7 @@ app.post("/api/create-job",isAuthenticated, async (req, res, next) => {
       location,
       description,
       aboutCompany,
-      skills,
+      skills :lowercaseSkills,
       date,
     });
 
@@ -143,14 +148,19 @@ app.post("/api/create-job",isAuthenticated, async (req, res, next) => {
 
 app.get("/api/jobs/:skills", async (req, res, next) => {
   try {
-    const skills = req.params.skills;
-    const jobs = await Job.find({skills:{$in:[skills]}});
+   const skills = req.params.skills;
+   const parsedSkills = JSON.parse(skills)
+    const lowercaseSkills = parsedSkills.map((skill) => skill.toLowerCase());
+    console.log(lowercaseSkills);
+    const jobs = await Job.find({ skills: { $in: lowercaseSkills } });
+   
     res.send({
       status: "SUCCESS",
       message: "Jobs fetched successfully",
       data: jobs,
     });
   } catch (err) {
+    console.log(err);
     next(new Error("Something went wrong! Please try after some time."));
   }
 

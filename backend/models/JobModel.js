@@ -39,7 +39,7 @@ const JobSchema = new mongoose.Schema({
     },
     skills: {
         type: [String],
-        required: true,
+        
     },
     isAdmin: {
         type: Boolean,

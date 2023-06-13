@@ -1,0 +1,93 @@
+.add-job-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  
+    font-size: 1rem;
+  }
+  .reg-h {
+    color: #000000;
+    font-size: 1.6rem;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1.3rem;
+  }
+
+  
+  .add-job-left {
+    margin-top: 1rem;
+    width: 50%;
+    height: 99%;
+    padding: 0.5rem 3rem;
+  }
+  
+  .add-job-left .add-job-form {
+    display: flex;
+    flex-direction: column;
+  }
+  .add-job-input {
+
+    background-color: #ffff;
+    border: 2px solid #c2c2c2;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    width: 70%;
+  }
+  .add-job-input:focus {
+    outline-color: #7b7b7b;
+  }
+  .add-job-input::placeholder{
+    color: #ADADAD;
+  }
+  
+  .check-box {
+    display: flex;
+    flex-direction: row;
+  }
+  .reg-submit {
+    background-color: #ed5353;
+    border: none;
+    width: 30%;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    color: #ffff;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+  }
+  .reg-submit:hover {
+    cursor: pointer;
+    background-color: #aa2a2a;
+  }
+  .add-job-right {
+    background-image: url("../../images/add-job.png");
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 50%;
+  }
+  .input-box{
+    width: 100%;
+  margin-bottom: 0.7rem;
+ justify-content: space-between;
+
+  }
+  .select-type-box{
+    justify-content: flex-start !important;
+
+  }
+  .input-select-type{
+    width: 20% !important;
+
+    color: #ADADAD;
+  }
+  
+.edit-btns:hover{
+  transform: scale(1.1);
+
+}
+.edit-job-btns{
+  margin-top: 0.6rem;
+  justify-content: flex-end;
+}

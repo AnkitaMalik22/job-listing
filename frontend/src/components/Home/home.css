@@ -1,0 +1,100 @@
+.home {
+    width: 100vw;
+  /* height: 98%; */
+  background-color: #ffffff;
+
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.job-conatiner {
+  /* position: sticky;
+  top: 37rem; */
+  width: 60%;
+  margin-top: 8rem;
+  display: flex;
+flex-direction: column;
+  justify-content: center;
+}
+.job-input-container {
+  display: flex;
+  flex-direction: column;
+  height: 12rem;
+align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0px 0px 22px 4px rgba(255, 32, 32, 0.25);
+  margin-bottom: 3rem;
+}
+.job-input {
+  margin-top: 1rem;
+  margin-bottom: 0.8rem;
+  background-color: #ffff;
+  border: 1px solid #c2c2c2;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  width: 80%;
+  height: 10%;
+  padding-left: 3rem;
+  font-size: 1rem;
+
+  font-weight: 500;
+}
+.job-input::placeholder {
+  color: #9c9c9c;
+}
+.job-input:focus {
+  outline-color: #7b7b7b;
+  border-color:#FF6B6B;
+}
+.selected-skill{
+    margin-right: 1rem;
+}
+
+.selected-skill-input {
+  background-color: #ffff;
+  border: 1px solid #c2c2c2;
+  padding: 0.5rem 1.8rem;
+  border-radius: 0.5rem;
+  color: #7b7b7b;
+  font-weight: 700;
+}
+
+.clear{
+    color:#FF6B6B;
+    font-weight: 700;
+    position: absolute;
+    right: 330px;
+    cursor: pointer;
+}
+.al-clear{
+  color:#FF6B6B;
+  font-weight: 700;
+  position: absolute;
+  top: 18rem;
+  right: 854px;
+  cursor: pointer;
+
+}
+.add-job{
+
+    background-color: #ED5353;
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid transparent;
+border-radius: 0.6rem;
+position: absolute;
+right: 330px;
+font-size: 0.8rem;
+ 
+}
+.add-job:hover{
+  background-color: transparent;
+  border: 1px solid #ED5353;
+  color: #ED5353;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}

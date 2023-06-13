@@ -1,0 +1,79 @@
+.header{
+    background-color: #ED5353;
+    width: 98.5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0.5rem;
+    height: 5rem;
+
+    border-radius: 0 0 3rem 3rem;
+  
+
+}
+.svg-1{
+    position: absolute;
+    top: 40px;
+    left: -22px;
+    z-index: -2;
+}
+.svg-2{
+    position: absolute;
+    top: -25px;
+    left: 32%;
+
+}
+.svg-3{
+    position: absolute;
+    top: -49px;
+    right: 4%;
+}
+
+.btns{
+    position: absolute;
+    right: 52px;
+    top: 28px;
+}
+.buttons{
+    border: 1px solid white;
+    padding: 0.5rem 2rem;
+    color: #ffff;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-left: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+.outlined-btn{
+background-color: transparent;
+}
+.outlined-btn:hover{
+    color: #ED5353;
+    background-color: #ffff;
+}
+.filled-btn{
+    background-color: #ffff;
+    color: #ED5353;
+    
+}
+.filled-btn:hover{
+    color: #ffff;
+    background-color: transparent;
+}
+.logout{
+    margin-right: 1rem;
+}
+.a-loggin{
+    color:#ffff;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+.a-loggin-btns{
+    position: absolute;
+    right: 82px;
+    top: 16px;
+    flex-direction: row;
+justify-content: space-between;
+}
+
